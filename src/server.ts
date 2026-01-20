@@ -1,6 +1,7 @@
 import express from "express"
 import { myMiddleware } from "./middlewares/my-middleware"
 
+
 const PORT = 3333
 const app = express()
 app.use(express.json())
@@ -20,7 +21,7 @@ app.post("/products", myMiddleware, (request, response) =>{
     const { name, price } = request.body
     //response.send(`Produto ${name} custa $ ${price}`)
 
-    response.status(201).json({ name, price })
+    response.status(201).json({ name, price, user_id: request.user_id })
 
 })
 
