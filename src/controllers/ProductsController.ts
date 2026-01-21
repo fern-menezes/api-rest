@@ -18,10 +18,13 @@ class ProductsController{
     create(request: Request, response:Response){
         const { name, price } = request.body
 
+        if(!name){
+            throw new AppError("Informe o nome do produto!", 400);
+        }
+
         //throw new Error("Erro ao criar produto");
         //throw new AppError("Erro ao criar produto");
         
-
         response.status(201).json({ name, price, user_id: request.user_id })
     }
 }
