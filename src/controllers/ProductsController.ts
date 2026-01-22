@@ -3,7 +3,7 @@ import { AppError } from "../utils/AppError";
 import { z } from "zod"
 
 
-class ProductsController{
+class ProductsController {
     /**
      * index - GET para listar vários registros.
      * show - GET para exibir um registro especifico.
@@ -12,16 +12,15 @@ class ProductsController{
      * remove - DELETE para |um registro
      */
 
-    index(request: Request, response:Response){
+    index(request: Request, response: Response) {
         const { page, limit } = request.query
-         response.status(201).json({ page, limit })
+        response.status(201).json({ page, limit })
     }
-    create(request: Request, response:Response){
+    create(request: Request, response: Response) {
         const bodySchema = z.object({
-            name: z.string(),
-            price: z.number().nullish(), //campo opcional
-        
-        })
+            name: z.string().min(1, { message: "informe o nome do produto" }).trim(),
+            price: z.number().positive({ message: "informe um número válido"}).nullish(), // campo opcional
+        });
         const { name, price } = bodySchema.parse(request.body)
 
         /** 
@@ -34,7 +33,7 @@ class ProductsController{
         */
         //throw new Error("Erro ao criar produto");
         //throw new AppError("Erro ao criar produto");
-        
+
         response.status(201).json({ name, price, user_id: request.user_id })
     }
 }
