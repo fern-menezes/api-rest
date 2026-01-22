@@ -21,6 +21,9 @@ class ProductsController{
         if(!name){
             throw new AppError("Informe o nome do produto!", 400);
         }
+        if(!price){
+            throw new AppError("Informe o preço do produto!", 400);
+        }
 
         //throw new Error("Erro ao criar produto");
         //throw new AppError("Erro ao criar produto");
